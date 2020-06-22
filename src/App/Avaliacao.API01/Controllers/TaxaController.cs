@@ -13,9 +13,9 @@ namespace Avaliacao.API01.Controllers
     {
         [HttpGet]
         [Route("/TaxaJuros")]
-        public double TaxaJuros()
+        public async Task<ActionResult> TaxaJuros()
         {
-            return Avaliacao.Core.API01.Taxa.Get();
+            return Ok(Avaliacao.Core.API01.Taxa.Get());
         }
     }
 }

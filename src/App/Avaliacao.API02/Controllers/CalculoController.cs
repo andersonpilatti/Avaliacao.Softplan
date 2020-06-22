@@ -2,8 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Avaliacao.Cross.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Refit;
 
 namespace Avaliacao.API02.Controllers
 {
@@ -13,23 +15,33 @@ namespace Avaliacao.API02.Controllers
     {
         [HttpGet]
         [Route("/CalculaJuros")]
-        public async Task<double> CalculaJuros(double valorInicial, int meses)
+        public async Task<ActionResult> CalculaJuros(double valorInicial, int meses)
         {
-            //double taxa = await _taxaService.GetTaxaJuros();
+            if (valorInicial == 0 ||
+                meses == 0)
+            {
+                return NotFound();
+            }
 
-            //var _taxaService = RestService.For<ITaxaService>("https://localhost:44388/");
-            //double taxa = await _taxaService.GetTaxaJuros();
+            try
+            {
+                var client = RestService.For<ITaxaService>("https://localhost:44388/");
+                double taxa = await client.GetTaxaJuros();
+                double result = Avaliacao.Core.API02.Juros.CalcularComposto(valorInicial, taxa, meses);
 
-            //return Avaliacao.Core.API02.Juros.CalcularComposto(valorInicial, taxa, meses);
-
-            return 0;
+                return Ok(result);
+            }
+            catch (Exception)
+            {
+                return BadRequest();
+            }
         }
 
         [HttpGet]
         [Route("/ShowMeTheCode")]
-        public string ShowMeTheCode()
+        public async Task<ActionResult> ShowMeTheCode()
         {
-            return Request.Path;
+            return Ok(Request.Path);
         }
     }
 }

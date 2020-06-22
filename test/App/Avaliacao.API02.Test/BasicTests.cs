@@ -15,15 +15,17 @@ namespace Avaliacao.API02.Test
         }
 
 
-        [Theory]
-        [InlineData("/CalculaJuros")]        
-        [InlineData("/ShowMeTheCode")]
-        public async Task EndPointTest(string url)
+        [Theory]       
+        [InlineData("/CalculaJuros", HttpStatusCode.NotFound)]
+        [InlineData("/CalculaJuros?valorInicial=100", HttpStatusCode.NotFound)]
+        [InlineData("/CalculaJuros?valorInicial=100&meses=5", HttpStatusCode.BadRequest)]
+        [InlineData("/ShowMeTheCode", HttpStatusCode.OK)]
+        public async Task EndPointTest(string url, HttpStatusCode status)
         {
             var _client = _factory.CreateClient();
             var response = await _client.GetAsync(url);
 
-            Assert.Equal(HttpStatusCode.OK, response.StatusCode);
+            Assert.Equal(status, response.StatusCode);
         }
     }
 }

@@ -5,9 +5,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="refit" Version="5.1.67" />
     <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="5.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="5.5.0" />
     <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="5.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\App.Core\Avaliacao.Core.API02\Avaliacao.Core.API02.csproj" />
+    <ProjectReference Include="..\..\App.Cross\Avaliacao.Cross\Avaliacao.Cross.csproj" />
   </ItemGroup>
 
 

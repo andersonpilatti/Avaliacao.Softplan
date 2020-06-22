@@ -10,6 +10,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
+using Microsoft.OpenApi.Models;
 
 namespace Avaliacao.API02
 {
@@ -26,6 +27,11 @@ namespace Avaliacao.API02
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllers();
+
+            services.AddSwaggerGen(sw =>
+            {
+                sw.SwaggerDoc(name: "v1", new OpenApiInfo { Title = "API-02", Version = "v1" });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -35,6 +41,12 @@ namespace Avaliacao.API02
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseSwagger();
+            app.UseSwaggerUI(swui =>
+            {
+                swui.SwaggerEndpoint(url: "/swagger/v1/swagger.json", "API-02");
+            });
 
             app.UseHttpsRedirection();
 
