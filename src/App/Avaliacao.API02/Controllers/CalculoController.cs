@@ -1,11 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Avaliacao.Cross.Interfaces;
-using Microsoft.AspNetCore.Http;
+﻿using Avaliacao.Cross.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using Refit;
+using System;
+using System.Net.NetworkInformation;
+using System.Threading.Tasks;
 
 namespace Avaliacao.API02.Controllers
 {
